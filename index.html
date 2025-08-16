@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Reflection Support</title>
+    <script src="Essential_Audio_Player_v2.1.1/essential_audio.js"></script>
+    <link rel="stylesheet" href="Essential_Audio_Player_v2.1.1/essential_audio.css"></link>
 	<style>
 		body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
 		header, footer { background: #f0f0f0; padding: 1em; text-align: center; }
@@ -18,10 +20,7 @@
 		<!-- Main content goes here -->
 		<section style="text-align:center; margin-top:2em;">
 			<h2>Audio Player</h2>
-			<audio controls>
-				<source src="Crying.m4a" type="audio/mpeg">
-				Your browser does not support the audio element.
-			</audio>
+			<div class="essential_audio" data-url="Crying.m4a"></div>
 		</section>
 	</main>
 	<footer>
