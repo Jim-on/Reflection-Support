@@ -20,11 +20,49 @@
 		<!-- Main content goes here -->
 		<section style="text-align:center; margin-top:2em;">
 			<h2>Audio Player</h2>
-			<div class="essential_audio" data-url="Crying.m4a"></div>
+			<div data-preload class="essential_audio" data-url="Crying.m4a" id="ea-player"></div>
 		</section>
 	</main>
 	<footer>
 		<p>&copy; 2025 Reflection Support</p>
+	<footer>
+		<p>&copy; 2025 Reflection Support</p>
 	</footer>
-</body>
-</html>
+	<script>
+	let wakeLock = null;
+	// Try to get the audio element from the Essential Audio Player
+	function getAudioElement() {
+		// Essential Audio Player creates an <audio> element inside the div
+		const playerDiv = document.getElementById('ea-player');
+		if (!playerDiv) return null;
+		return playerDiv.querySelector('audio');
+	}
+
+	function requestWakeLock() {
+		if ('wakeLock' in navigator) {
+			navigator.wakeLock.request('screen').then(lock => {
+				wakeLock = lock;
+			}).catch(() => {});
+		}
+	}
+
+	function releaseWakeLock() {
+		if (wakeLock) {
+			wakeLock.release();
+			wakeLock = null;
+		}
+	}
+
+	// Wait for the audio element to be created
+	function setupWakeLockEvents() {
+		const audio = getAudioElement();
+		if (!audio) {
+			setTimeout(setupWakeLockEvents, 500);
+			return;
+		}
+		audio.addEventListener('play', requestWakeLock);
+		audio.addEventListener('pause', releaseWakeLock);
+		audio.addEventListener('ended', releaseWakeLock);
+	}
+	window.addEventListener('DOMContentLoaded', setupWakeLockEvents);
+	</script>
